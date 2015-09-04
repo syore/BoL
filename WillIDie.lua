@@ -1,16 +1,15 @@
 local EnemyHeroes = GetEnemyHeroes()
 
  -- updater
-local version = 1.00
+local version = 0.01
 local AUTO_UPDATE = true
 local UPDATE_HOST = "raw.github.com"
-local UPDATE_PATH = "/jineyne/bol/master/can he kill me.lua".."?rand="..math.random(1,10000)
-local UPDATE_FILE_PATH = LIB_PATH.."Yours Teemo.lua"
+local UPDATE_PATH = "/syore/BoL/master/WillIDie.lua".."?rand="..math.random(1,10000)
 local UPDATE_URL = "https://"..UPDATE_HOST..UPDATE_PATH
 
-local function AutoupdaterMsg(msg) print("<font color=\"#6699ff\"><b>can he kill me:</b></font> <font color=\"#FFFFFF\">"..msg..".</font>") end
+local function AutoupdaterMsg(msg) print("<font color=\"#6699ff\"><b>Will I Die:</b></font> <font color=\"#FFFFFF\">"..msg..".</font>") end
 if AUTO_UPDATE then
-	local ServerData = GetWebResult(UPDATE_HOST, "/jineyne/bol/master/can he kill me.version")
+	local ServerData = GetWebResult(UPDATE_HOST, "/syore/BoL/master/WillIDie.version")
 	if ServerData then
 		ServerVersion = type(tonumber(ServerData)) == "number" and tonumber(ServerData) or nil
 		if ServerVersion then
@@ -54,7 +53,7 @@ end
  
  
 function menu()
-	myConfig = scriptConfig("Can he kill me?","can he kill me?")
+	myConfig = scriptConfig("Will I die?","Shall I die?")
  
 	myConfig:addSubMenu("Drawing Settings", "drawing")
 	myConfig.drawing:addParam("drawText", "Draw Champion Text", SCRIPT_PARAM_ONOFF, true)
@@ -106,8 +105,38 @@ function DmgCalc()
         elseif myHero.health < SpellQ + SpellE + SpellR then
             ChampionTable[i].indicatorText = "Able to kill me with Q, E and R"
 
+        elseif myHero.health < SpellQ + SpellE + SpellW + SpellR then
+            ChampionTable[i].indicatorText = "Able to kill me with a full combo"
+
         elseif myHero.health < SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with ignite"
+
+        elseif myHero.health =< SpellQ + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with Q and ignite"
+
+        elseif myHero.health =< SpellW + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with W and ignite"
+
+        elseif myHero.health =< SpellE + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with E and ignite"
+
+        elseif myHero.health =< SpellR + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with R and ignite"
+
+        elseif myHero.health =< SpellQ + SpellW + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with Q, W and ignite"
+
+        elseif myHero.health =< SpellQ + SpellE + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with Q, E and ignite"
+
+        elseif myHero.health =< SpellQ + SpellR + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with Q, R and ignite"
+        elseif myHero.health =< SpellQ + SpellW + SpellE +SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with Q, W, E and ignite"
+         elseif myHero.health =< SpellQ + SpellE + SpellW + SpellR + SpellI then
+            ChampionTable[i].indicatorText = "Able to kill me with a full combo and ignite"
+
+
 
         else
             local dmgTotal = (SpellQ + SpellW + SpellE + SpellR)
