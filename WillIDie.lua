@@ -1,13 +1,13 @@
 local EnemyHeroes = GetEnemyHeroes()
 
  -- updater
-local version = 0.01
+local version = 0.02
 local AUTO_UPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/syore/BoL/master/WillIDie.lua".."?rand="..math.random(1,10000)
 local UPDATE_URL = "https://"..UPDATE_HOST..UPDATE_PATH
 
-local function AutoupdaterMsg(msg) print("<font color=\"#6699ff\"><b>Will I Die:</b></font> <font color=\"#FFFFFF\">"..msg..".</font>") end
+local function AutoupdaterMsg(msg) print("<font color=\"#6699ff\"><b>Will I Die?</b></font> <font color=\"#FFFFFF\">"..msg..".</font>") end
 if AUTO_UPDATE then
 	local ServerData = GetWebResult(UPDATE_HOST, "/syore/BoL/master/WillIDie.version")
 	if ServerData then
@@ -111,29 +111,29 @@ function DmgCalc()
         elseif myHero.health < SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with ignite"
 
-        elseif myHero.health =< SpellQ + SpellI then
+        elseif myHero.health < SpellQ + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with Q and ignite"
 
-        elseif myHero.health =< SpellW + SpellI then
+        elseif myHero.health < SpellW + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with W and ignite"
 
-        elseif myHero.health =< SpellE + SpellI then
+        elseif myHero.health < SpellE + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with E and ignite"
 
-        elseif myHero.health =< SpellR + SpellI then
+        elseif myHero.health < SpellR + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with R and ignite"
 
-        elseif myHero.health =< SpellQ + SpellW + SpellI then
+        elseif myHero.health < SpellQ + SpellW + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with Q, W and ignite"
 
-        elseif myHero.health =< SpellQ + SpellE + SpellI then
+        elseif myHero.health < SpellQ + SpellE + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with Q, E and ignite"
 
-        elseif myHero.health =< SpellQ + SpellR + SpellI then
+        elseif myHero.health < SpellQ + SpellR + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with Q, R and ignite"
-        elseif myHero.health =< SpellQ + SpellW + SpellE +SpellI then
+        elseif myHero.health < SpellQ + SpellW + SpellE +SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with Q, W, E and ignite"
-         elseif myHero.health =< SpellQ + SpellE + SpellW + SpellR + SpellI then
+         elseif myHero.health < SpellQ + SpellE + SpellW + SpellR + SpellI then
             ChampionTable[i].indicatorText = "Able to kill me with a full combo and ignite"
 
 
@@ -142,11 +142,12 @@ function DmgCalc()
             local dmgTotal = (SpellQ + SpellW + SpellE + SpellR)
             local hpLeft = math.round(myHero.health - dmgTotal)
             local percentLeft = math.round(hpLeft / myHero.maxHealth * 100)
-                ChampionTable[i].indicatorText = "Cant kill me ( " .. percentLeft .. "% )"
+                ChampionTable[i].indicatorText = "If he goes all in I'll have ( " .. percentLeft .. "% ) hp left."
         end
  
-            local ChampionAD = getDmg("AD", myHero, Champion)  
-            ChampionTable[i].damageGettingText = Champion.charName .. " Killed me with " .. math.ceil(myHero.health / ChampionAD) .. " hits"
+            local ChampionAD = getDmg("AD", myHero, Champion) 
+        
+            ChampionTable[i].damageGettingText = Champion.charName .. " Can kill me with " .. math.ceil(myHero.health / ChampionAD) .. " auto attacks."
         end
     end
 end
@@ -162,7 +163,7 @@ function OnDraw()
 				local barPos = WorldToScreen(D3DXVECTOR3(Champion.x, Champion.y, Champion.z))
 				local pos = { X = barPos.x - 35, Y = barPos.y - 50 }
 
-				DrawText(ChampionTable[i].indicatorText, 15, pos.X + 20, pos.Y, (ChampionTable[i].ready and ARGB(255, 0, 255, 0)) or ARGB(255, 255, 220, 0))
+				DrawText(ChampionTable[i].indicatorText, 15, pos.X + 20, pos.Y, (ChampionTable[i].ready and ARGB(255, 255, 255, 255)) or ARGB(255, 255, 220, 0))
 				DrawText(ChampionTable[i].damageGettingText, 15, pos.X + 20, pos.Y + 15, ARGB(255, 255, 0, 0))
 			end
         end
